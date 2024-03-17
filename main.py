@@ -1,6 +1,6 @@
-from setuptools import debug 
-from fileinput import filename
 from flask import Flask
+from logging import debug 
+from fileinput import filename
 
 app = Flask(__name__)
 
