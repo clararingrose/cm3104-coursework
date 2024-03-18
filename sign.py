@@ -13,9 +13,9 @@ def sign(key, document):
   return signature
 
 def verifySignature(key, document, signature):
-  print("VERIFY KEY:", key)
+  print("VERIFY KEY:", key.publickey())
   h = SHA256.new(document)
-  verifier = pss.new(key)
+  verifier = pss.new(key.publickey())
   try:
       verifier.verify(h, signature)
       print("The signature is authentic.")
@@ -30,8 +30,8 @@ def writeFile(filePath, fileName, data):
    file.close()
 
 #testing
-newkey =  RSA.generate(3072)
-newdoc = open('prescription.txt', 'rb').read()
-sig = sign(newkey, newdoc)
+# newkey =  RSA.generate(3072)
+# newdoc = open('prescription.txt', 'rb').read()
+# sig = sign(newkey, newdoc)
 
-verifySignature(newkey, newdoc, sig)
+# verifySignature(newkey, newdoc, sig)
