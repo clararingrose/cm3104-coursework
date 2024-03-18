@@ -20,25 +20,40 @@
       <tr>
         <td>
             <form action="/output" method = "POST" enctype="multipart/form-data">   
-              <input type="file" name="file" required />
-              <br>
-              <input type = "submit" value="Upload">
-          </form>
+              <table>
+                <tr>
+                  <td><label for="file">File</label></td>
+                  <td><input type="file" name="file" required /></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><input type="submit" value="Upload"></td>
+                </tr>
+              </table>
+            </form>
         </td>
         <td>&emsp;</td>
         <td>
           <form action="/verify" method = "POST" enctype="multipart/form-data">   
-            <label for="signature">Digital Signature</label>
-            <input type="file" name="signature" required />
-            <br>
-            <label for="key">Key</label>
-            <input type="file" name="key" required />
-            <br>
-            <lable for="file">File</lable>
-            <input type="file" name="file" required />
-            <br>
-            <input type = "submit" value="Upload">
-        </form>
+            <table>
+              <tr>
+                <td><label for="signature">Digital Signature</label></td>
+                <td><input type="file" name="signature" required /></td>
+              </tr>
+              <tr>
+                <td><label for="key">Key</label></td>
+                <td><input type="file" name="key" required /></td>
+              </tr>
+              <tr>
+                <td><label for="file">File</label></td>
+                <td><input type="file" name="file" required /></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><input type="submit" value="Upload"></td>
+              </tr>
+            </table>
+          </form>
         </td>
       </tr>
     </table>
