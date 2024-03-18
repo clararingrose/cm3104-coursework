@@ -5,7 +5,7 @@ from flask import *
 from werkzeug.utils import secure_filename
 from sign import *
 
-UPLOAD_FOLDER = "/Users/uni/Documents/Python/cm3104-coursework/files"
+UPLOAD_FOLDER = "/Users/uni/Documents/Python/cm3104-coursework/static/files"
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLER'] = UPLOAD_FOLDER
@@ -17,16 +17,21 @@ def index():
 @app.route("/output", methods = ['GET', 'POST'])
 def output():
   if request.method == 'POST':
+    # save the uploaded data to file
     file = request.files['file']
-    print("FILE TYPE", type(file))
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file.save(os.path.join(UPLOAD_FOLDER, secure_filename(file.filename)))
+    
+    # create key and save to file
     key = generate_key()
-    print("KEY", type(key))
+    with open("static/files/key.der", "wb") as f:
+      f.write(key.public_key().export_key())
+
+    # create signature and save to file
     signature = sign(key, file.read())
-    print("SIGNATURE", signature)
+    writeFile(os.path.join(UPLOAD_FOLDER), '/signature.txt', signature)
+    
     return render_template("output.html", signature=signature, key=key)
-  return False
+  return render_template("index.html")
 
 @app.route("/verify", methods= ['GET', 'POST'])
 def verify():
@@ -34,8 +39,11 @@ def verify():
     file = request.files['file'].read()
     signature = request.files['signature'].read()
     key = request.files["key"].read()
+    print(key)
+    key = RSA.import_key(key)
+    print(key)
 
-    result = verify(key, file, signature)
+    result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)
   return False
 

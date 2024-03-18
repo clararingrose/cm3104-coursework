@@ -9,19 +9,24 @@ def sign(key, document):
   signature = pss.new(key).sign(h)
   return signature
 
-def verify(key, document, signature):
+def verifySignature(key, document, signature):
   h = SHA256.new(document)
   verifier = pss.new(key)
   try:
       verifier.verify(h, signature)
       print("The signature is authentic.")
-      return True
+      return "The signature is authentic."
   except (ValueError):
       print("The signature is not authentic.")
-      return False
+      return "The signature is not authentic."
 
 def generate_key():
    return RSA.generate(3072)
+
+def writeFile(filePath, fileName, data):
+   file = open(filePath + fileName, "wb")
+   file.write(data)
+   file.close()
 
 #testing
 # newkey =  RSA.generate(3072)

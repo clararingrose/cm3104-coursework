@@ -10,11 +10,12 @@
   <body>
 
     <h1>CM3104 Prototype</h1>
+    <hr>
 
     <table>
       <tr>
         <th>Upload a Prescription to be Digitally Signed</th>
-        <th>&emsp;</th>
+        <th>or</th>
         <th>Verify an Existing Digital Signature</th>
       </tr>
       <tr>
@@ -22,7 +23,7 @@
             <form action="/output" method = "POST" enctype="multipart/form-data">   
               <table>
                 <tr>
-                  <td><label for="file">File</label></td>
+                  <td><label for="file"><b>File:</b></label></td>
                   <td><input type="file" name="file" required /></td>
                 </tr>
                 <tr>
@@ -37,15 +38,15 @@
           <form action="/verify" method = "POST" enctype="multipart/form-data">   
             <table>
               <tr>
-                <td><label for="signature">Digital Signature</label></td>
+                <td><label for="signature"><b>Digital Signature:</b></label></td>
                 <td><input type="file" name="signature" required /></td>
               </tr>
               <tr>
-                <td><label for="key">Key</label></td>
+                <td><label for="key"><b>Public Key:</b></label></td>
                 <td><input type="file" name="key" required /></td>
               </tr>
               <tr>
-                <td><label for="file">File</label></td>
+                <td><label for="file"><b>File:</b></label></td>
                 <td><input type="file" name="file" required /></td>
               </tr>
               <tr>
