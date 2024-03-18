@@ -4,6 +4,7 @@ import os
 from flask import *
 from werkzeug.utils import secure_filename
 from sign import *
+from Crypto.PublicKey import RSA
 
 UPLOAD_FOLDER = "/Users/uni/Documents/Python/cm3104-coursework/static/files"
 
@@ -22,7 +23,7 @@ def output():
     file.save(os.path.join(UPLOAD_FOLDER, secure_filename(file.filename)))
     
     # create key and save to file
-    key = generate_key()
+    key = RSA.generate(3072)
     with open("static/files/key.der", "wb") as f:
       f.write(key.public_key().export_key())
 
@@ -38,14 +39,13 @@ def verify():
   if request.method == "POST":
     file = request.files['file'].read()
     signature = request.files['signature'].read()
-    key = request.files["key"].read()
-    print(key)
-    key = RSA.import_key(key)
-    print(key)
+    print(type(signature))
+    print(signature)
+    key = RSA.import_key(request.files["key"].read())
 
     result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)
-  return False
+  return render_template("index.html")
 
 if __name__ == "__main__":
   app.run(host="127.0.0.1", port=8080, debug=True)

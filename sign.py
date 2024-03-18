@@ -5,11 +5,15 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 
 def sign(key, document):
+  print("SIGN KEY:", key)
   h = SHA256.new(document)
   signature = pss.new(key).sign(h)
+  print(type(signature))
+  print(signature)
   return signature
 
 def verifySignature(key, document, signature):
+  print("VERIFY KEY:", key)
   h = SHA256.new(document)
   verifier = pss.new(key)
   try:
@@ -20,18 +24,14 @@ def verifySignature(key, document, signature):
       print("The signature is not authentic.")
       return "The signature is not authentic."
 
-def generate_key():
-   return RSA.generate(3072)
-
 def writeFile(filePath, fileName, data):
    file = open(filePath + fileName, "wb")
    file.write(data)
    file.close()
 
 #testing
-# newkey =  RSA.generate(3072)
-# newdoc = open('prescription.txt', 'rb').read()
-# sig = sign(newkey, newdoc)
-# print("SIGNING:", sig)
+newkey =  RSA.generate(3072)
+newdoc = open('prescription.txt', 'rb').read()
+sig = sign(newkey, newdoc)
 
-# verify(newkey, newdoc, sig)
+verifySignature(newkey, newdoc, sig)
