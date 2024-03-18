@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>CM3104 Prototype</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+
+  <body>
+
+    <h1>CM3104 Prototype</h1>
+
+    <table>
+      <tr>
+        <th>Upload a Prescription to be Digitally Signed</th>
+        <th>&emsp;</th>
+        <th>Verify an Existing Digital Signature</th>
+      </tr>
+      <tr>
+        <td>
+            <form action="/output" method = "POST" enctype="multipart/form-data">   
+              <input type="file" name="file" required />
+              <br>
+              <input type = "submit" value="Upload">
+          </form>
+        </td>
+        <td>&emsp;</td>
+        <td>
+          <form action="/verify" method = "POST" enctype="multipart/form-data">   
+            <label for="signature">Digital Signature</label>
+            <input type="file" name="signature" required />
+            <br>
+            <label for="key">Key</label>
+            <input type="file" name="key" required />
+            <br>
+            <lable for="file">File</lable>
+            <input type="file" name="file" required />
+            <br>
+            <input type = "submit" value="Upload">
+        </form>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

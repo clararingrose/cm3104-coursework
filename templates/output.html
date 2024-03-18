@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>CM3104 Prototype</title>
+  </head>
+
+  <body>
+
+    <h1>CM3104 Prototype</h1>
+
+    <h3>Digital Signature Download</h3>
+    <!-- <p>{{ signature }}</p> -->
+    <textarea id="sigvalue">{{ signature }}</textarea>
+
+    <a href="" id="sig" download="digitalsignature.txt">
+      <button>Download the Digital Signature</button>
+    </a>
+
+    <p>{{ key }}</p>
+    <a href="" id="key" download="key.txt">
+      <button>Download the Key</button>
+    </a>
+  </body>
+
+  <script>
+    var signature = getElementById("sigvalue");
+    var key = '{{ key }}';
+
+    window.onload = function(){
+      document.getElementById('sig').onclick = function(){
+        this.href = signature.value;
+      };
+
+      document.getElementById('key').onclick = function(){
+        this.href = key.value;
+      };
+    };
+
+    main();
+  </script>
+
+</html>

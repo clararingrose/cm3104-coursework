@@ -20,10 +20,13 @@ def verify(key, document, signature):
       print("The signature is not authentic.")
       return False
 
+def generate_key():
+   return RSA.generate(3072)
 
-newkey =  RSA.generate(3072)
-newdoc = open('prescription.txt', 'rb').read()
-sig = sign(newkey, newdoc)
-print("SIGNING:", sig)
+#testing
+# newkey =  RSA.generate(3072)
+# newdoc = open('prescription.txt', 'rb').read()
+# sig = sign(newkey, newdoc)
+# print("SIGNING:", sig)
 
-verify(newkey, newdoc, sig)
+# verify(newkey, newdoc, sig)
