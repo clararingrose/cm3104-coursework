@@ -23,9 +23,9 @@ def output():
     file.save(os.path.join(UPLOAD_FOLDER, secure_filename(file.filename)))
     
     # create key and save to file
-    key = RSA.generate(3072)
+    key = RSA.generate(2048)
     with open("static/files/key.der", "wb") as f:
-      f.write(key.export_key())
+      f.write(key.public_key().export_key())
 
     # create signature and save to file
     signature = sign(key, file.read())

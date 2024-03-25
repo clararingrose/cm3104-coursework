@@ -5,15 +5,15 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 
 def sign(key, document):
-  print("SIGN KEY:", key)
+  # print("SIGN KEY:", key)
   h = SHA256.new(document)
   signature = pss.new(key).sign(h)
-  print(type(signature))
-  print(signature)
+  # print(type(signature))
+  # print(signature)
   return signature
 
 def verifySignature(key, document, signature):
-  print("VERIFY KEY:", key.publickey())
+  # print("VERIFY KEY:", key.publickey())
   h = SHA256.new(document)
   verifier = pss.new(key.publickey())
   try:
