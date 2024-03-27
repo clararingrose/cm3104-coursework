@@ -5,17 +5,13 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 
 def sign(key, document):
-  # print("SIGN KEY:", key)
   h = SHA256.new(document)
   signature = pss.new(key).sign(h)
-  # print(type(signature))
-  # print(signature)
   return signature
 
 def verifySignature(key, document, signature):
-  # print("VERIFY KEY:", key.publickey())
   h = SHA256.new(document)
-  verifier = pss.new(key.publickey())
+  verifier = pss.new(key)
   try:
       verifier.verify(h, signature)
       print("The signature is authentic.")
@@ -23,11 +19,6 @@ def verifySignature(key, document, signature):
   except (ValueError):
       print("The signature is not authentic.")
       return "The signature is not authentic."
-
-def writeFile(filePath, fileName, data):
-   file = open(filePath + fileName, "wb")
-   file.write(data)
-   file.close()
 
 #testing
 # newkey =  RSA.generate(3072)

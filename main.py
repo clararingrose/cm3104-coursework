@@ -33,15 +33,21 @@ def output():
       f.write(signature)
     # writeFile(os.path.join(UPLOAD_FOLDER), '/signature.txt', signature)
     
-    return render_template("output.html", signature=signature, key=key)
+    return render_template("output.html", signature=signature, key=key.public_key())
   return render_template("index.html")
 
 @app.route("/verify", methods= ['GET', 'POST'])
 def verify():
   if request.method == "POST":
     file = request.files['file'].read()
+    print("FILE", file)
+    print(type(file))
     signature = request.files['signature'].read()
+    print("SIG", signature)
+    print(type(signature))
     key = RSA.import_key(request.files["key"].read())
+    print("PUBLIC KEY", key)
+    print(type(key))
 
     result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)

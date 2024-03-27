@@ -6,11 +6,12 @@ from Crypto.PublicKey import RSA
 
 key = RSA.generate(2048)
 
-print(type(key))
-print(key)
+# print(type(key))
+# print(key)
 
 
 file = open("static/files/prescription.txt", "rb").read()
+print("FILE", file)
 print(type(file))
 
 signature = sign(key, file)
@@ -28,13 +29,16 @@ with open("static/files/signature.txt", "wb") as f:
 # read public key
 newkey = open("static/files/key.der", "r")
 pubkey = RSA.import_key(newkey.read())
-print()
+print("PUBLIC KEY", pubkey)
+print(type(pubkey))
 
 # read signature
 sig = open("static/files/signature.txt", "rb").read()
+print("SIG", sig)
+print(type(sig))
 
-print(pubkey)
-print(type(pubkey))
+# print(pubkey)
+# print(type(pubkey))
 
 print("VERIFY")
 verifySignature (pubkey, file, sig)
