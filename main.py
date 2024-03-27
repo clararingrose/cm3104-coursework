@@ -29,7 +29,9 @@ def output():
 
     # create signature and save to file
     signature = sign(key, file.read())
-    writeFile(os.path.join(UPLOAD_FOLDER), '/signature.txt', signature)
+    with open("static/files/signature.txt", "wb") as f:
+      f.write(signature)
+    # writeFile(os.path.join(UPLOAD_FOLDER), '/signature.txt', signature)
     
     return render_template("output.html", signature=signature, key=key)
   return render_template("index.html")
@@ -39,8 +41,6 @@ def verify():
   if request.method == "POST":
     file = request.files['file'].read()
     signature = request.files['signature'].read()
-    print(type(signature))
-    print(signature)
     key = RSA.import_key(request.files["key"].read())
 
     result = verifySignature(key, file, signature)
