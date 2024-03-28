@@ -2,7 +2,6 @@
 # then:   flask run -p 8080
 import os
 from flask import *
-from werkzeug.utils import secure_filename
 from sign import *
 from Crypto.PublicKey import RSA
 
@@ -20,8 +19,7 @@ def output():
   if request.method == 'POST':
     # save the uploaded data to file
     file = request.files['file']
-    # file.save(os.path.join(UPLOAD_FOLDER, secure_filename(file.filename)))
-    
+
     # create key and save to file
     key = RSA.generate(2048)
     with open("static/files/key.der", "wb") as f:
