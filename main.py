@@ -17,16 +17,16 @@ def index():
 @app.route("/output", methods = ['GET', 'POST'])
 def output():
   if request.method == 'POST':
-    # save the uploaded data to file
-    file = request.files['file']
+    # save user-uploaded file as data
+    file = request.files['file'].read()
 
-    # create key and save to file
+    # create key pair and save public key to file
     key = RSA.generate(2048)
     with open("static/files/key.der", "wb") as f:
       f.write(key.public_key().export_key())
 
     # create signature and save to file
-    signature = sign(key, file.read())
+    signature = sign(key, file)
     with open("static/files/signature.txt", "wb") as f:
       f.write(signature)
     
@@ -36,15 +36,10 @@ def output():
 @app.route("/verify", methods= ['GET', 'POST'])
 def verify():
   if request.method == "POST":
-    file = request.files['file'].read()
-    # print("FILE", file)
-    # print(type(file))
+    # import user-uploaded files
     signature = request.files['signature'].read()
-    # print("SIG", signature)
-    # print(type(signature))
     key = RSA.import_key(request.files["key"].read())
-    # print("PUBLIC KEY", key)
-    # print(type(key))
+    file = request.files['file'].read()
 
     result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)
