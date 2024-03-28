@@ -19,10 +19,3 @@ def verifySignature(key, document, signature):
   except (ValueError):
       print("The signature is not authentic.")
       return "The signature is not authentic."
-
-#testing
-# newkey =  RSA.generate(3072)
-# newdoc = open('prescription.txt', 'rb').read()
-# sig = sign(newkey, newdoc)
-
-# verifySignature(newkey, newdoc, sig)

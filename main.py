@@ -5,10 +5,7 @@ from flask import *
 from sign import *
 from Crypto.PublicKey import RSA
 
-UPLOAD_FOLDER = "/Users/uni/Documents/Python/cm3104-coursework/static/files"
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def index():
