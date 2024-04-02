@@ -1,5 +1,5 @@
 # to run: source venv/bin/activate
-# then:   flask run -p 8080
+# then:   python3 main.py
 import os
 from flask import *
 from sign import *
