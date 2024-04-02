@@ -2,7 +2,6 @@
 
 from Crypto.Signature import pss
 from Crypto.Hash import SHA256
-from Crypto.PublicKey import RSA
 
 def sign(key, document):
   h = SHA256.new(document)
@@ -14,8 +13,6 @@ def verifySignature(key, document, signature):
   verifier = pss.new(key)
   try:
       verifier.verify(h, signature)
-      print("The signature is authentic.")
       return "The signature is authentic."
   except (ValueError):
-      print("The signature is not authentic.")
       return "The signature is not authentic."
