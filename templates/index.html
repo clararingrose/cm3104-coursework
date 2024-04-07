@@ -9,7 +9,7 @@
 
   <body>
     <header>
-      <h1>CM3104 Digital Signature Prototype</h1>
+      <a href="{{ url_for('index') }}"><h1>CM3104 Digital Signature Prototype</h1></a>
       <hr>
     </header>
 
@@ -24,8 +24,12 @@
             <form action="/output" method = "POST" enctype="multipart/form-data">   
               <table>
                 <tr>
-                  <td><label for="file"><b>File:</b></label></td>
+                  <td><label for="file"><b>File*:</b></label></td>
                   <td><input type="file" name="file" required /></td>
+                </tr>
+                <tr>
+                  <td><label for="privkey"><b>Private Key:</b></label></td>
+                  <td><input type="file" name="privkey" /></td>
                 </tr>
                 <tr>
                   <td></td>
@@ -39,15 +43,15 @@
           <form action="/verify" method = "POST" enctype="multipart/form-data">   
             <table>
               <tr>
-                <td><label for="signature"><b>Digital Signature:</b></label></td>
+                <td><label for="signature"><b>Digital Signature*:</b></label></td>
                 <td><input type="file" name="signature" required /></td>
               </tr>
               <tr>
-                <td><label for="key"><b>Public Key:</b></label></td>
-                <td><input type="file" name="key" required /></td>
+                <td><label for="pubkey"><b>Public Key*:</b></label></td>
+                <td><input type="file" name="pubkey" required /></td>
               </tr>
               <tr>
-                <td><label for="file"><b>File:</b></label></td>
+                <td><label for="file"><b>File*:</b></label></td>
                 <td><input type="file" name="file" required /></td>
               </tr>
               <tr>
@@ -56,6 +60,7 @@
               </tr>
             </table>
           </form>
+          <b>{{ result }}</b>
         </td>
       </tr>
     </table>
