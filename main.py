@@ -4,6 +4,8 @@
 from flask import *
 from sign import *
 from Crypto.PublicKey import RSA
+import random
+import io
 
 app = Flask(__name__)
 
@@ -26,12 +28,8 @@ def output():
     signature = sign(key, file)
     with open("static/files/signature.txt", "wb") as f:
       f.write(signature)
-
-    print(type(signature))
-    print(signature)
-    print(signature.decode('latin_1'))
     
-    return render_template("output2.html", signature=signature, key=key.public_key().export_key().decode())
+    return render_template("output.html", signature=signature, key=key.public_key().export_key().decode())
   return render_template("index.html")
 
 @app.route("/verify", methods= ['GET', 'POST'])
@@ -46,6 +44,28 @@ def verify():
     result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)
   return render_template("index.html")
+
+@app.route('/signature.txt')
+def signature():
+    """Serves the signature file."""
+
+    with open("static/files/signature.txt", 'rb') as bites:
+        return send_file(
+                     io.BytesIO(bites.read()),
+                     attachment_filename='signature.txt',
+                     mimetype='text/plain'
+               )
+
+@app.route('/key.der')
+def key():
+    """Serves the public key file."""
+
+    with open("static/files/key.der", 'rb') as bites:
+        return send_file(
+                     io.BytesIO(bites.read()),
+                     attachment_filename='key.der',
+                     mimetype='text/plain'
+               )
 
 if __name__ == "__main__":
   app.run(host="127.0.0.1", port=8080, debug=True)

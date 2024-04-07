@@ -2,9 +2,11 @@
 
 from Crypto.Signature import pss
 from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
 
 def sign(key, document):
   h = SHA256.new(document)
+  print(h)
   signature = pss.new(key).sign(h)
   return signature
 

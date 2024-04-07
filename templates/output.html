@@ -20,19 +20,19 @@
         <th>Public Key Download</th>
         </tr>
         <tr>
-          <td><textarea>{{ signature }}</textarea></td>
+          <td><textarea readonly id="sig" rows="4" cols="30">{{ signature }}</textarea></td>
           <td>&emsp;</td>
-          <td><textarea>{{ key }}</textarea></td>
+          <td><textarea readonly id="key" rows="4" cols="30">{{ key }}</textarea></td>
         </tr>
         <tr>
           <td>
-            <a href="{{ url_for('static', filename='files/signature.txt') }}" download="signature.txt">
+            <a href="{{ url_for('signature') }}" download="signature.txt">
               <button>Download the Digital Signature</button>
             </a>
           </td>
           <td>&emsp;</td>
           <td>
-            <a href="{{ url_for('static', filename='files/key.der') }}" download="key.der">
+            <a href="{{ url_for('key') }}" download="key.der">
               <button>Download the Public Key</button>
             </a>
           </td>
