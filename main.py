@@ -1,6 +1,6 @@
 # to run: source venv/bin/activate
 # then:   python3 main.py
-import os
+
 from flask import *
 from sign import *
 from Crypto.PublicKey import RSA
@@ -29,9 +29,9 @@ def output():
 
     print(type(signature))
     print(signature)
-    # print(signature.decode('ascii'))
+    print(signature.decode('latin_1'))
     
-    return render_template("output2.html", signature=signature.decode(), key=key.public_key().export_key().decode())
+    return render_template("output2.html", signature=signature, key=key.public_key().export_key().decode())
   return render_template("index.html")
 
 @app.route("/verify", methods= ['GET', 'POST'])
@@ -39,6 +39,7 @@ def verify():
   if request.method == "POST":
     # import user-uploaded files
     signature = request.files['signature'].read()
+    print(type(signature))
     key = RSA.import_key(request.files["key"].read())
     file = request.files['file'].read()
 
