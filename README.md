@@ -1,6 +1,6 @@
 # cm3104-coursework
 
-Python web app to digitally sign a file, and verify exising digital signatures. Developed using [Flask](https://flask.palletsprojects.com/) for web app functionality and [PyCryptodome](https://www.pycryptodome.org/) for cryptographic operations.
+Python web app to digitally sign a file, and verify exising digital signatures, for CM3104 Computer Security and Cryptography. Developed using [Flask](https://flask.palletsprojects.com/) for web app functionality and [PyCryptodome](https://www.pycryptodome.org/) for cryptographic operations.
 
 To run the app:
 

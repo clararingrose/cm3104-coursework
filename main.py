@@ -4,8 +4,8 @@
 from flask import *
 from sign import *
 from Crypto.PublicKey import RSA
-import random
 import io
+import zipfile
 
 app = Flask(__name__)
 
@@ -16,20 +16,22 @@ def index():
 @app.route("/output", methods = ['GET', 'POST'])
 def output():
   if request.method == 'POST':
-    # save user-uploaded file as data
-    file = request.files['file'].read()
+    # save prescription file from user as data
+    prescription = request.files['file'].read()
 
-    # create key pair and save public key to file
+    # create RSA key pair and sign the prescription file
     key = RSA.generate(2048)
-    with open("static/files/key.der", "wb") as f:
-      f.write(key.public_key().export_key())
+    signature = sign(key, prescription)
 
-    # create signature and save to file
-    signature = sign(key, file)
-    with open("static/files/signature.txt", "wb") as f:
-      f.write(signature)
-    
-    return render_template("output.html", signature=signature, key=key.public_key().export_key().decode())
+    # create a zip file and save signature, key, and prescription to it
+    memory_file = io.BytesIO()
+    with zipfile.ZipFile(memory_file, 'w') as zf:
+        zf.writestr("signature.txt", signature)
+        zf.writestr("key.der", key.public_key().export_key())
+        zf.writestr("prescription.txt", prescription)
+    memory_file.seek(0)
+
+    return send_file(memory_file, download_name='signature.zip')
   return render_template("index.html")
 
 @app.route("/verify", methods= ['GET', 'POST'])
@@ -37,35 +39,13 @@ def verify():
   if request.method == "POST":
     # import user-uploaded files
     signature = request.files['signature'].read()
-    print(type(signature))
     key = RSA.import_key(request.files["key"].read())
     file = request.files['file'].read()
 
+    # verify the signature
     result = verifySignature(key, file, signature)
     return render_template("verify.html", result=result)
   return render_template("index.html")
-
-@app.route('/signature.txt')
-def signature():
-    """Serves the signature file."""
-
-    with open("static/files/signature.txt", 'rb') as bites:
-        return send_file(
-                     io.BytesIO(bites.read()),
-                     attachment_filename='signature.txt',
-                     mimetype='text/plain'
-               )
-
-@app.route('/key.der')
-def key():
-    """Serves the public key file."""
-
-    with open("static/files/key.der", 'rb') as bites:
-        return send_file(
-                     io.BytesIO(bites.read()),
-                     attachment_filename='key.der',
-                     mimetype='text/plain'
-               )
 
 if __name__ == "__main__":
   app.run(host="127.0.0.1", port=8080, debug=True)
