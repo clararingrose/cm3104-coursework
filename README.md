@@ -11,4 +11,4 @@ To run the app:
 5. Run `python3 main.py` to start the web app
 6. Go to [localhost:8080](http://localhost:8080) on your browser
 
-(You may need to replace `python3` with `python` and `pip3` with `pip` depending on your Python setup)
+(You may need to replace `python3` with `python` or `py`, and `pip3` with `pip` depending on your Python setup)
